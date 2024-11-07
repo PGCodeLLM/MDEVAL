@@ -39,15 +39,13 @@ def json2file_fix(line):
     question_id = line['question_id'].split('/')[1]
     if language_type == 'F#':
         content = f"{line['fix_code']}\n\n{line['test']}"
-        output_file = 'env/C#/MyFsharpApp/Program.fs'
+        output_file = 'env/F#/MyFsharpApp/Program.fs'
     elif language_type == 'C#':  # C#
         content = f"{line['fix_code']}\n\n{line['test']}"
-        output_file = 'env/F#/MyConsoleApp/Program.cs'
+        output_file = 'env/C#/MyConsoleApp/Program.cs'
     elif language_type == 'Rust':  # C#
         content = f"{line['fix_code']}\n\n{line['test']}"
         output_file = 'env/Rust/rust/src/main.rs'
-        with open('./tmp/' + question_id + '.' + extension_dic[language_type], 'w') as f:
-            f.write(content)
         # output_file = 'tmp' + '/' + question_id + '.' + extension_dic[language_type]
     elif language_type == 'Go':
         content = f"{line['fix_code']}\n\n{line['test']}"
@@ -94,6 +92,7 @@ def check_excute(file,language):
             data['fix_code'] = 'import Foundation\n' + data['fix_code']
         output_file,language,_ ,file_ext= json2file_fix(data)
         if (not excute(language, output_file, data['question_id'], 'env/tmp',data)):
+            fail_list.append(i+1)
             print(f"{language} fix error: {i+1}")
     print(f"{language} pass rate: {1-len(fail_list)/total}")
     return fail_list,total

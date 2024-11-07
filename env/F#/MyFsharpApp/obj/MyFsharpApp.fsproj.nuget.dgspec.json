@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/root/McEval/debug_add/F#/MyFsharpApp/MyFsharpApp.fsproj": {}
+    "/root/MDEVAL/env/F#/MyFsharpApp/MyFsharpApp.fsproj": {}
   },
   "projects": {
-    "/root/McEval/debug_add/F#/MyFsharpApp/MyFsharpApp.fsproj": {
+    "/root/MDEVAL/env/F#/MyFsharpApp/MyFsharpApp.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/root/McEval/debug_add/F#/MyFsharpApp/MyFsharpApp.fsproj",
+        "projectUniqueName": "/root/MDEVAL/env/F#/MyFsharpApp/MyFsharpApp.fsproj",
         "projectName": "MyFsharpApp",
-        "projectPath": "/root/McEval/debug_add/F#/MyFsharpApp/MyFsharpApp.fsproj",
+        "projectPath": "/root/MDEVAL/env/F#/MyFsharpApp/MyFsharpApp.fsproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/root/McEval/debug_add/F#/MyFsharpApp/obj/",
+        "outputPath": "/root/MDEVAL/env/F#/MyFsharpApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/root/.nuget/NuGet/NuGet.Config"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/root/McEval/debug_add/C#/C#/MyConsoleApp/MyConsoleApp.csproj": {}
+    "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj": {}
   },
   "projects": {
-    "/root/McEval/debug_add/C#/C#/MyConsoleApp/MyConsoleApp.csproj": {
+    "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/root/McEval/debug_add/C#/C#/MyConsoleApp/MyConsoleApp.csproj",
+        "projectUniqueName": "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
         "projectName": "MyConsoleApp",
-        "projectPath": "/root/McEval/debug_add/C#/C#/MyConsoleApp/MyConsoleApp.csproj",
+        "projectPath": "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
         "packagesPath": "/root/.nuget/packages/",
-        "outputPath": "/root/McEval/debug_add/C#/C#/MyConsoleApp/obj/",
+        "outputPath": "/root/MDEVAL/env/C#/MyConsoleApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/root/.nuget/NuGet/NuGet.Config"

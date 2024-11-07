@@ -1,56 +1,28 @@
-fn max_prime_factor_in_list(numbers: &[i32]) -> i32
-{
-    let mut max_prime = -1;
-    let mut result = -1;
-
-    for &num in numbers {
-        let prime_factor = largest_prime_factor(num);
-        if prime_factor > max_prime {
-            max_prime = prime_factor;
-            result = num;
+fn has_close_elements(numbers: Vec<f32>, threshold: f32) -> bool {
+    for i in 0..numbers.len() {
+        for j in (i + 1)..numbers.len() {
+            let distance: f32 = (numbers[i] - numbers[j]).abs();
+            if distance < threshold {
+                return true;
+            }
         }
     }
-
-    result
-}
-
-fn largest_prime_factor(mut n: i32) -> i32 
-{
-    let mut max_prime = -1;
-
-    // Divide n by 2 until it becomes odd
-    while n % 2 == 0 {
-        max_prime = 2;
-        n /= 2;
-    }
-
-    // n must be odd at this point, so a skip of 2 (i += 2) can be used
-    for i in (3..=(n as f64).sqrt() as i32).step_by(2) {
-        while n % i == 0 {
-            max_prime = i;
-            n /= i;
-        }
-    }
-
-    // Handle the case when n is a prime number greater than 2
-    if n > 2 {
-        max_prime = n;
-    }
-
-    max_prime
+    return false;
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
+ mod tests {
+  use super::*;
  
-    #[test]
-    fn main() {
-        assert_eq!(max_prime_factor_in_list(&[36, 38, 40, 42]), 38);
-        assert_eq!(max_prime_factor_in_list(&[10, 15, 21, 22]), 22);
-        assert_eq!(max_prime_factor_in_list(&[7, 11, 13, 19]), 19);
-        assert_eq!(max_prime_factor_in_list(&[2, 3, 5, 7]), 7);
-    }
-    
-
-}
+  #[test]
+  fn test_has_close_elements() {
+  assert_eq!(has_close_elements(vec![11.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.3), true);
+  assert_eq!(has_close_elements(vec![1.0, 2.0, 3.9, 4.0, 5.0, 2.2], 0.05), false);
+  assert_eq!(has_close_elements(vec![1.0, 2.0, 5.9, 4.0, 5.0], 0.95), true);
+  assert_eq!(has_close_elements(vec![1.0, 2.0, 5.9, 4.0, 5.0], 0.8), false);
+  assert_eq!(has_close_elements(vec![1.0, 2.0, 3.0, 4.0, 5.0, 2.0], 0.1), true);
+  assert_eq!(has_close_elements(vec![1.1, 2.2, 3.1, 4.1, 5.1], 1.0), true);
+  assert_eq!(has_close_elements(vec![1.1, 2.2, 3.1, 4.1, 5.1], 0.5), false);
+  }
+ 
+ }
