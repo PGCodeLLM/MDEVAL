@@ -40,7 +40,7 @@ Official repository for our paper "MDEVAL: Massively Multilingual Code Debugging
 
 
 ## Introduction
-**MDEVAL** is a massively multilingual debugging benchmark covering **20** programming languages with **3.6K** test samples and three tasks focused on bug fixing. It substantially pushes the limits of code LLMs in multilingual scenarios.
+**MDEVAL** is a massively multilingual debugging benchmark covering **20** programming languages with **3.9K** test samples and three tasks focused on bug fixing. It substantially pushes the limits of code LLMs in multilingual scenarios.
 <p align="center">
 <img src="assets/intro.png" width="50%" alt="McEval" />
 </p>
@@ -81,6 +81,18 @@ Refer to our <a href="https://mdeval-code.github.io/leaderboard.html">🏆 Leade
 
 </div>
 
+### Data File Struction
+```
+.
+|-- bug      : APR tasks providing only buggy code
+|-- doc      : APR tasks providing functional descriptions of programs
+|-- example  : APR tasks providing demonstration examples
+|-- ident    : Bug Identification
+|-- loc      : Bug Localization
+|-- loc_apr  : APR tasks providing bug location information
+|-- raw      : Raw data
+`-- review   : Code Review
+```
 ## Usage
 
 
@@ -124,6 +136,15 @@ We provide the standard format for JSON files obtained after model inference.
 #### Data Format 
 **🛎️ Please prepare the inference results of the model in the following format and use them for the next evaluation step.**
 
+We provide a concise inference code example to help you get started quickly. The code is located under the path `inference/chat.py`, and you can initiate the inference process using the following bash script:
+```bash
+sh inference/chat.sh
+```
+##### Notes ⚠️
+
+1. **Model and Task Configuration**: Before use, please ensure that the inference model and evaluation tasks are correctly configured in the `chat.sh` script.
+2. **Flexible Customization**: You can flexibly modify the `chat` function in `inference/chat.py` according to your actual needs to accommodate different inference scenarios.
+
 (1) Folder Structure
 Place the data in the following folder structure, each file corresponds to the test results of each language. 
 ```bash 
@@ -133,12 +154,12 @@ Place the data in the following folder structure, each file corresponds to the t
   - Java.jsonl
   ...
 ```
-Where "model" represents the model being tested, and "setting" represents the task , for example `doc` , `bug` , `example` , `review` , `ident`
+Where "model" represents the model being tested, and "setting" represents the task , for example `doc` , `bug` , `example` , `review` , `ident` , `loc`.
 
 
 (2) File Format 
 Each line in the file for each test language has the following format.
-The *fix_code* field is the generated code.
+The *llm_response* field is the generated code.
 <!-- More examples can be found in [Evualute Data Format Examples](examples/evaluate/) -->
 ```bash 
 {
@@ -152,7 +173,7 @@ The *fix_code* field is the generated code.
   "buggy_code": "",
   "test": "",
   "instruction": "",
-  "fix_code":"" //model output
+  "llm_response":"" //model output
 }
 ```
 
@@ -160,7 +181,7 @@ The *fix_code* field is the generated code.
 #### Evaluate APR Task
 Take the evaluation generation task as an example.
 ```bash
-bash sh excute/apr.sh
+sh excute/apr.sh
 ```
 
 <!-- ## More Examples
