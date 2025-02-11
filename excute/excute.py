@@ -4,12 +4,14 @@ import subprocess as sp
 import json
 import os
 import time
+import markdown
 import filecmp
 import traceback
 import shutil 
 
 # from .safe_subprocess import run
 import safe_subprocess as subprocess
+from bs4 import BeautifulSoup
 timeout = 30
 
 @contextlib.contextmanager
@@ -67,7 +69,7 @@ def excute(language_type, path, task_id, temp_dir,data)->bool:
     elif language_type == "C":
         try:
             module_name = os.path.join(temp_dir, path.split("/")[1].split(".")[0])
-            compile_command = ['gcc', '-o', module_name, path, '-lm']
+            compile_command = ['gcc', '-o', module_name, path, '-lm', '-fsanitize=address','-pthread']
             # print(module_name)
             run_test_command = [module_name]
             compile_result = subprocess.run(
@@ -104,7 +106,8 @@ def excute(language_type, path, task_id, temp_dir,data)->bool:
         try:
             # print(path, path.split("/")[-1].split(".")[0])
             module_name = os.path.join(temp_dir, path.split("/")[-1].split(".")[0])
-            compile_command = ['g++', '-g', '-std=c++11', '-o', module_name, path]
+            #compile_command = ['g++', '-g', '-std=c++11', '-o', module_name, path]
+            compile_command = ['g++', '-g', '-std=c++11', '-o', module_name, path,"-pthread","-fsanitize=address"]
 
             # print(module_name)
         
@@ -420,6 +423,8 @@ def excute(language_type, path, task_id, temp_dir,data)->bool:
                     ['scala', path])
                 # print(task_id)
                 # print(run_result)
+                os.system('rm -rf env/tmp/.bsp')
+                os.system('rm -rf env/tmp/.scala-build')
                 if run_result.exit_code != 0:
                     #print("\nRun failed. Error message:")
                     #print(run_result.stderr)
@@ -452,7 +457,7 @@ def excute(language_type, path, task_id, temp_dir,data)->bool:
         try:
             exec_res = None
             with time_limit(timeout):
-                if json.loads(data['canonical_solution']) == json.loads(data['fix_code']):
+                if json.loads(data['canonical_solution']) == json.loads(data['llm_response']):
                     #print("\nRun failed. Error message:")
                     #print(run_result.stderr)
                     return True
@@ -463,38 +468,48 @@ def excute(language_type, path, task_id, temp_dir,data)->bool:
         except Exception as e:
             #print("time out")
             return False
-    
-def check_right_code(folder_path):
-    for root,dirs,files in os.walk(folder_path):
-        for file in files:
-            if file.endswith('.lisp'):
-                task_id = file.split('.')[0]
-                language_type = 'Common Lisp'
-                path = os.path.join(root,file)
-                temp_dir = 'tmp'
-                excute(language_type, path, task_id, temp_dir)
-
-def check_bug_code(folder_path):
-    for root,dirs,files in os.walk(folder_path):
-        for file in files:
-            if file.endswith('.lisp'):
-                task_id = file.split('.')[0]
-                language_type = 'Common Lisp'
-                path = os.path.join(root,file)
-                temp_dir = 'tmp'
-                excute(language_type, path, task_id, temp_dir)
+    elif language_type == "HTML":
+        try:
+            exec_res = None
+            with time_limit(timeout):
+                html1 = data['canonical_solution']
+                html2 = data['llm_response']    
+                soup1 = BeautifulSoup(html1, 'html5lib')
+                # 生成规范化后的HTML字符串
+                normalized_html1 = soup1.prettify()
                 
-def check_generate_code(folder_path,suffix = '.lisp',language_type = 'Common Lisp'):
-    for root,dirs,files in os.walk(folder_path):
-        right_num = 0
-        for file in files:
-            if file.endswith(suffix):
-                task_id = file.split('.')[0]
-                path = os.path.join(root,file)
-                temp_dir = 'tmp'
-                if (excute(language_type, path, task_id, temp_dir)):
-                    right_num += 1
-    print(right_num)            
-#check_right_code('debug/clisp/verify/right')
-#check_bug_code('debug/clisp/verify/bug')
-#check_generate_code('debug/python/chat/code/python-1015-yi',suffix='.py',language_type='python')
+                # 解析第二个HTML字符串
+                soup2 = BeautifulSoup(html2, 'html5lib')
+                # 生成规范化后的HTML字符串
+                normalized_html2 = soup2.prettify()
+                
+                # 比较两个规范化后的HTML字符串
+                return normalized_html1 == normalized_html2
+        except Exception as e:
+            return False
+    
+    elif language_type == "Markdown":
+        def normalize_html(html):
+            soup = BeautifulSoup(html, 'html.parser')
+            # 去除所有空格和换行符，只保留文本和标签结构
+            for tag in soup.find_all(True):
+                # 去除多余的空格
+                if tag.string:
+                    tag.string = tag.string.strip()
+            # 生成标准化的HTML
+            normalized_html = soup.prettify()
+            return normalized_html
+        try:
+            exec_res = None
+            with time_limit(timeout):
+                md1 = data['canonical_solution'].replace('# ', '#$').replace(' ', '').replace('#$', '# ')
+                md2 = data['llm_response'].replace('# ', '#$').replace(' ', '').replace('#$', '# ')
+                html1 = markdown.markdown(md1)
+                html2 = markdown.markdown(md2)
+    
+                normalized_html1 = normalize_html(html1)
+                normalized_html2 = normalize_html(html2)
+                return normalized_html1 == normalized_html2
+        except Exception as e:
+            print(e)
+            return False

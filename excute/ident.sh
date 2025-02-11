@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# 定义参数
-model="qwen"
+model_list="4o 4omini claude0620 claude1022"
 
-# 运行 execute.py 并传递参数
-python excute/ident.py "$model"
+for model in $model_list; do
+    echo "Executing for model: $model"
+    python excute/ident.py "$model"
+done

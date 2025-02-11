@@ -3,6 +3,9 @@
 # MDEVAL: Massively Multilingual Code Debugging
 
 <div align="center" style="line-height: 1;">
+    <a href="https://www.python.org/">
+        <img alt="Build" src="https://img.shields.io/badge/Python-3.9+-1f425f.svg?color=purple"style="display: inline-block; vertical-align: middle;"/>
+    </a>
   <a href="" style="margin: 2px;">
     <img alt="Code License" src="https://img.shields.io/badge/Code_License-MIT-f5de53%3F?color=green" style="display: inline-block; vertical-align: middle;"/>
   </a>
@@ -37,26 +40,33 @@ Official repository for our paper "MDEVAL: Massively Multilingual Code Debugging
 
 
 ## Introduction
-**MDEVAL** is a massively multilingual debugging benchmark covering **18** programming languages with **3K** test samples, which substantially pushes the limits of code LLMs in multilingual scenarios.
+**MDEVAL** is a massively multilingual debugging benchmark covering **20** programming languages with **3.6K** test samples and three tasks focused on bug fixing. It substantially pushes the limits of code LLMs in multilingual scenarios.
 <p align="center">
 <img src="assets/intro.png" width="50%" alt="McEval" />
 </p>
 
 
 ### Task Examples
+MDEVAL covers the automated program repair (APR) task,the bug localization(BL) task, and the bug identification (BI) task. Here is a visualization example from MDEVAL, where the model is required to address all three tasks.
 <p align="center">
 <img src="assets/bench_cases.png" width="80%" alt="McEval" />
 </p>
 
+### Error types in MDEVAL
+MDEVAL covers **47** distinct error types, including both generic errors across all programming languages and language-specific errors such as "Missing Mut" in language Rust and "Misused Macro Definition" in language C
+<p align="center">
+<img src="assets/error_type.png" width="80%" alt="McEval" />
+</p>
 
-## Results 
+## Results
+We systematically evaluate the multilingual code debugging capabilities of **40** models on MDEVAL and create a leaderboard to evaluate them on **20** programming languages dynamically. Notably, extensive experiments suggest that comprehensive multilingual multitask evaluation can realistically measure the gap between open-source and closed-source models 
 <p align="center">
 <img src="assets/result.png" width="100%" alt="McEval" />
 </p>
 
-<p align="center">
+<!-- <p align="center">
 <img src="assets/radar.png" width="100%" alt="McEval" />
-</p>
+</p> -->
 
 
 Refer to our <a href="https://mdeval-code.github.io/leaderboard.html">🏆 Leaderboard </a>  for more results.
@@ -70,6 +80,7 @@ Refer to our <a href="https://mdeval-code.github.io/leaderboard.html">🏆 Leade
 | MDEVAL Evaluation Dataset  | [🤗 HuggingFace](https://huggingface.co/datasets/Multilingual-Multimodal-NLP/McEval)   |
 
 </div>
+
 ## Usage
 
 
@@ -83,7 +94,7 @@ Directly pull the image from Docker Hub:
 
 ```bash 
 # Docker hub:
-docker pull multilingualnlp/mceval
+docker pull multilingualnlp/mdeval
 
 docker run -it -d --restart=always --name mdeval_dev --workdir  / <image-name>  /bin/bash
 docker attach mdeval_dev

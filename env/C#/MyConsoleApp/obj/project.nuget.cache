@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b1nKBTGBA9o=",
+  "dgSpecHash": "yafj92rFb4g=",
   "success": true,
-  "projectFilePath": "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
+  "projectFilePath": "/root/MdEval_Dev/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

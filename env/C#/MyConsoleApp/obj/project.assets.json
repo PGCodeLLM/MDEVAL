@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
+      "projectUniqueName": "/root/MdEval_Dev/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
       "projectName": "MyConsoleApp",
-      "projectPath": "/root/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
+      "projectPath": "/root/MdEval_Dev/MDEVAL/env/C#/MyConsoleApp/MyConsoleApp.csproj",
       "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/root/MDEVAL/env/C#/MyConsoleApp/obj/",
+      "outputPath": "/root/MdEval_Dev/MDEVAL/env/C#/MyConsoleApp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/root/.nuget/NuGet/NuGet.Config"

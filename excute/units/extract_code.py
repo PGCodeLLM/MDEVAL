@@ -19,7 +19,9 @@ def extract_code_block(code,language):
         'Julia': r"```julia(.*?)```",
         'Pascal': r"```pascal(.*?)```",
         'Clisp': r"```lisp(.*?)```",
-        'JSON': r"```json(.*?)```"
+        'JSON': r"```json(.*?)```",
+        'HTML': r"```html(.*?)```",
+        'Markdown': r"```markdown(.*?)```",
         # 添加其他语言类型
     }
     # 获取 CPP 模式
@@ -48,7 +50,6 @@ def extract_code_block(code,language):
             extract_code = docstring_match_1.group(1).strip()
         else:
             extract_code = code
-    
     if language == "Scala" and extract_code.endswith('\n}'):
         extract_code = extract_code[:-1]
         

@@ -1,6 +1,10 @@
 #!/bin/bash
 
-model="qwen"
-mission="bug"
+model_list="4o 4omini claude0620 claude1022"
 
-python excute/apr.py "$mission" "$model"
+mission="doc"
+
+for model in $model_list; do
+    echo "Executing for model: $model"
+    python excute/apr.py "$mission" "$model"
+done
