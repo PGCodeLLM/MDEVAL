@@ -135,13 +135,13 @@ if __name__ == '__main__':
                 ]
     mission =  sys.argv[1]
     model = sys.argv[2]
-    output_file = f'mdeval/eval_results/{mission}/{model}/evaluation_results.jsonl'
-    os.makedirs(os.path.dirname(f'mdeval/eval_results/{mission}/{model}/evaluation_results.jsonl'), exist_ok=True)
+    output_file = f'mdeval/eval_results/{model}/{mission}/evaluation_results.jsonl'
+    os.makedirs(os.path.dirname(f'mdeval/eval_results/{model}/{mission}/evaluation_results.jsonl'), exist_ok=True)
     all_fail = 0
     all_total = 0
     for language in language_list:
         print(f"start check {model}:{language}")
-        file = f'mdeval/eval_results/{mission}/{model}/{language}.jsonl'
+        file = f'mdeval/eval_results/{model}/{mission}/{language}.jsonl'
         fail_list,total = check_excute(file,language)
         all_fail += len(fail_list)
         all_total += total

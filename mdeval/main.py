@@ -91,7 +91,7 @@ def process_language(language, task, experiment_id, client, model, generation_pa
         if completed % 10 == 0:
             print(f"{language}: {completed}/{len(dataset)} completed")
 
-    output_file = f'mdeval/eval_results/{task}/{experiment_id}/{language}.jsonl'
+    output_file = f'mdeval/eval_results/{experiment_id}/{task}/{language}.jsonl'
     save_results(results, output_file)
 
     print(f"Completed {language}: {completed}/{len(dataset)}")
@@ -100,7 +100,7 @@ def process_language(language, task, experiment_id, client, model, generation_pa
 
 def run_generation(args):
     """Run generation for all languages"""
-    output_dir = Path(f"mdeval/eval_results/{args.task}/{args.experiment_id}")
+    output_dir = Path(f"mdeval/eval_results/{args.experiment_id}/{args.task}")
     meta_dir = output_dir / "meta"
     output_dir.mkdir(parents=True, exist_ok=True)
     meta_dir.mkdir(parents=True, exist_ok=True)
@@ -210,7 +210,7 @@ def run_evaluation(task, experiment_id):
 
 def show_results(task, experiment_id):
     """Show evaluation results"""
-    results_file = Path(f"mdeval/eval_results/{task}/{experiment_id}/evaluation_results.jsonl")
+    results_file = Path(f"mdeval/eval_results/{experiment_id}/{task}/evaluation_results.jsonl")
 
     if not results_file.exists():
         print(f"Results file not found: {results_file}")
