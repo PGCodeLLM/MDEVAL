@@ -1,5 +1,4 @@
 env/tmp
 __pycache__
 data/chat_result
-data/run_result
-mdeval/eval_results
+data/eval_result
