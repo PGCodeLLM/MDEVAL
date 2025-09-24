@@ -59,6 +59,7 @@ def run_evaluation(experiment_id, task, inference_file=None, evaluation_dir=None
 
             # Save language results in the directory structure apr.py expects
             language_file = apr_input_dir / f"{language}.jsonl"
+            print(f"Creating language file: {language_file}")
 
             with open(language_file, 'w') as f:
                 for item in items:
@@ -67,6 +68,8 @@ def run_evaluation(experiment_id, task, inference_file=None, evaluation_dir=None
                         item['llm_response'] = item['response']
                         del item['response']
                     f.write(json.dumps(item) + '\n')
+
+            print(f"Created {language_file} with {len(items)} items")
 
         # Run evaluation using apr.py
         eval_cmd = [

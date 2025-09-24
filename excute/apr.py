@@ -144,11 +144,17 @@ if __name__ == '__main__':
     for language in language_list:
         print(f"start check {model}:{language}")
         file = f'{input_dir}/{language}.jsonl'
+
+        # Skip languages that don't have corresponding files
+        if not os.path.exists(file):
+            print(f"Skipping {language} - no input file found at {file}")
+            continue
+
         fail_list,total = check_excute(file,language)
         all_fail += len(fail_list)
         all_total += total
         info = {'language':language,'fail_list':fail_list,'fail_num':len(fail_list),'total':total}
         with open(output_file, 'a') as f:
-            json.dump(info, f)    
+            json.dump(info, f)
             f.write('\n')
     print(f"all pass rate: {1-all_fail/all_total}")
