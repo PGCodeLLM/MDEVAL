@@ -2,3 +2,4 @@ env/tmp
 __pycache__
 data/chat_result
 data/eval_result
+excute/units/__pycache__
