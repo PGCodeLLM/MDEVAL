@@ -88,14 +88,6 @@ def run_evaluation(experiment_id, task, inference_file=None, evaluation_dir=None
             if apr_results_file.exists():
                 shutil.copy2(apr_results_file, evaluation_file)
                 print(f"Copied evaluation results to: {evaluation_file}")
-
-                # Clean up temporary directories
-                try:
-                    shutil.rmtree(Path("data"))
-                    print("Cleaned up temporary data directory")
-                except Exception as cleanup_e:
-                    print(f"Warning: Failed to cleanup temporary directory: {cleanup_e}")
-
                 return True
             else:
                 print(f"Warning: apr.py results file not found at {apr_results_file}")
@@ -109,13 +101,6 @@ def run_evaluation(experiment_id, task, inference_file=None, evaluation_dir=None
                 print("STDERR:", e.stderr)
             return False
 
-        finally:
-            # Always try to clean up temporary directory
-            try:
-                if Path("data").exists():
-                    shutil.rmtree(Path("data"))
-            except Exception:
-                pass
 
     except Exception as e:
         print(f"Error during evaluation: {e}")
