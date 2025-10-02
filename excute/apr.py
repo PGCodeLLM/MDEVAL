@@ -135,18 +135,26 @@ if __name__ == '__main__':
                 ]
     mission =  sys.argv[1]
     model = sys.argv[2]
-    output_file = f'data/run_result/{mission}/{model}/info.jsonl'
-    os.makedirs(os.path.dirname(f'data/run_result/{mission}/{model}/info.jsonl'), exist_ok=True)
+    input_dir = f'data/chat_result/{model}/{mission}'
+    output_file = f'data/eval_result/{model}/{mission}/evaluation_results.jsonl'
+
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     all_fail = 0
     all_total = 0
     for language in language_list:
         print(f"start check {model}:{language}")
-        file = f'data/chat_result/{mission}/{model}/{language}.jsonl'
+        file = f'{input_dir}/{language}.jsonl'
+
+        # Skip languages that don't have corresponding files
+        if not os.path.exists(file):
+            print(f"Skipping {language} - no input file found at {file}")
+            continue
+
         fail_list,total = check_excute(file,language)
         all_fail += len(fail_list)
         all_total += total
         info = {'language':language,'fail_list':fail_list,'fail_num':len(fail_list),'total':total}
         with open(output_file, 'a') as f:
-            json.dump(info, f)    
+            json.dump(info, f)
             f.write('\n')
     print(f"all pass rate: {1-all_fail/all_total}")
